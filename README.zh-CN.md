@@ -6,6 +6,16 @@ Agent 跑起来以后，团队往往很难回答几个简单的问题：钱花�
 
 这套资料帮你把一个现有的 Python 工作流接入 Reins。第一次只记录，不改变 Agent 的执行方式。看过自己的任务记录后，再决定是否加预算规则。
 
+## 先看看产品长什么样
+
+[![Reins 任务工作台：保存的 Agent 任务与多 Agent 复盘](docs/images/task-workspace.png)](https://47.245.114.167:8443/app/#research)
+
+打开[线上演示](https://47.245.114.167:8443/app/#research)，可以选一条已保存的任务，看结果、费用和执行回放。图中使用示例输入，API 费用是按记录估算的；你自己的试用数据保留在自己的环境里。
+
+![运行分析：API 费用、模型调用、交接次数和各 Agent 的费用](docs/images/run-analysis.png)
+
+当团队问“这次任务花了多少钱、是哪个 Agent 花的”时，就看这块。想逐页了解费用归因、预算、结果复核和执行回放，可看[图解产品页面](docs/product-tour.zh-CN.md)。
+
 ## 从这里开始
 
 Reins 产品代码在私有仓库中。请联系 Reins 团队取得 `catyans/reins` 的只读权限，然后在 Python 3.10+ 虚拟环境中安装：
@@ -29,6 +39,7 @@ reins compare --database /tmp/reins-pilot.duckdb --task-type supplier_lookup
 | 资料 | 适合什么时候看 |
 | --- | --- |
 | [快速上手](docs/quickstart.zh-CN.md) | 接入一个任务、查看记录，以及撤回改动。 |
+| [图解产品页面](docs/product-tour.zh-CN.md) | 看当前网页工作台每个页面有什么、能做什么。 |
 | [接入指南](docs/integration.zh-CN.md) | 根据模型和 Agent 框架选择接入方式。 |
 | [示例代码](examples/) | 参考可运行的写法，或对照接入前后的代码。 |
 | [接入 skill](skills/reins-integrate/SKILL.md) | 让 Codex 或 Claude Code 为你的代码库准备接入改动。 |

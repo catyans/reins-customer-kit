@@ -1,6 +1,6 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=21mm,headheight=23pt]{geometry}
-\usepackage{xcolor,booktabs,tabularx,enumitem,fancyhdr,hyperref}
+\usepackage{xcolor,booktabs,tabularx,enumitem,fancyhdr,hyperref,graphicx}
 \definecolor{ink}{HTML}{173B2B}
 \definecolor{accent}{HTML}{5E874A}
 \definecolor{muted}{HTML}{5F7167}
@@ -18,13 +18,18 @@
 \renewcommand{\headrule}{\hbox to\headwidth{\color{line}\leaders\hrule height \headrulewidth\hfill}}
 \newcommand{\sectiontitle}[1]{\vspace{5pt}{\large\bfseries\color{ink}#1}\par\vspace{2pt}}
 \begin{document}
-\vspace*{20mm}
+\vspace*{4mm}
 {\fontsize{31}{36}\selectfont\bfseries\color{ink}Make every Agent task\\accountable.\par}
-\vspace{8mm}
+\vspace{5mm}
 {\large\color{muted}A guided Reins pilot for one existing Python workflow}\par
-\vspace{9mm}
+\vspace{6mm}
 \colorbox{line}{\parbox{0.91\linewidth}{\vspace{5pt}\textbf{The first step is observation.} See what a task did, what it cost, and whether its result passed your business check. Review the evidence before choosing runtime controls.\vspace{5pt}}}\par
-\vspace{10mm}
+\vspace{5mm}
+\begin{center}
+\includegraphics[width=0.72\linewidth]{docs/images/run-analysis.png}\\[2pt]
+{\small\color{muted}Public demo: the recorded cost, calls and handoffs of one multi-Agent task.}
+\end{center}
+\vspace{0mm}
 \sectiontitle{What you need}
 \begin{itemize}
 \item Python 3.10+, a new virtual environment, and read-only access to the private \texttt{catyans/reins} repository.

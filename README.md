@@ -6,6 +6,16 @@ When an Agent keeps working, it can be hard to tell which calls were useful, wha
 
 This kit helps you try Reins on one existing Python workflow. The first run only records what happens. After you have seen your own task history, you can decide whether to add budget rules.
 
+## See the product
+
+[![Reins task workspace showing saved Agent tasks and a multi-Agent review](docs/images/task-workspace.png)](https://47.245.114.167:8443/app/#research)
+
+The [public demo](https://47.245.114.167:8443/app/#research) lets you open a saved task, inspect its result, and replay what happened. The pictured inputs are examples; the displayed API costs are recorded estimates. Your own trial runs and data stay in your environment.
+
+![Run analysis showing API cost, model calls, handoffs, and cost by Agent](docs/images/run-analysis.png)
+
+This is the view to use when someone asks, “What did this task cost, and which Agent spent it?” The [visual product tour](docs/product-tour.en.md) walks through every screen, including cost attribution, budgets, quality review, and the execution replay.
+
 ## Start here
 
 Reins itself is in a private repository. Ask your Reins contact for read-only access to `catyans/reins`, then install it in a Python 3.10+ virtual environment:
@@ -29,6 +39,7 @@ The example uses a made-up task and fee. For a useful trial, follow the [quickst
 | Guide | When to use it |
 | --- | --- |
 | [Quickstart](docs/quickstart.en.md) | Connect one task, inspect a run and undo the change. |
+| [Visual product tour](docs/product-tour.en.md) | See every page of the current web workspace and what you can do there. |
 | [Integration guide](docs/integration.en.md) | Choose the right connection for your model provider and Agent framework. |
 | [Examples](examples/) | Copy a small working pattern or compare code before and after integration. |
 | [Integration skill](skills/reins-integrate/SKILL.md) | Have Codex or Claude Code prepare a small patch for your repository. |

@@ -19,6 +19,10 @@ The [before](../examples/customer_before.py) and [after](../examples/customer_af
 
 For an SDK-only first pilot, wrap the complete task and record `record_outcome(success=...)`. `record_retry()` describes an actual application retry. `record_external_cost()` reports an already incurred fee; it is not an admission guard. Do not add the same provider charge twice through both SDK instrumentation and an explicit call. Reins suppresses nested SDK admission inside an explicit call, but the integration must still bound the full nested charge.
 
+![Runs page showing the saved execution list](images/runs.png)
+
+After connection, use **Runs** to find the task you wrapped and inspect its execution record. For a multi-Agent workflow, the task workspace also shows [cost by Agent and received handoffs](images/run-analysis.png). The [visual product tour](product-tour.en.md) explains what each page does. These images are from the public full-workspace demo; a basic SDK observation pilot has a smaller local timeline.
+
 ## Running the explicit examples
 
 In another terminal, start the customer-local control service:

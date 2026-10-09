@@ -19,6 +19,10 @@
 
 若第一步只做 SDK 观察，包住完整任务并调用 `record_outcome(success=...)`。`record_retry()` 只记录应用实际发生的重试。`record_external_cost()` 上报已经产生的费用，不拦截支出。不要通过 SDK 和显式 call 对同一费用重复入账。显式 call 内部会抑制嵌套 SDK admission，但仍须覆盖其中全部费用。
 
+![运行记录页：已保存的任务列表](images/runs.png)
+
+接入后可在 **Runs** 中找到该任务，检查执行记录。多 Agent 工作流还可以在任务工作台看到[各 Agent 的费用和交接](images/run-analysis.png)。[图解产品页面](product-tour.zh-CN.md)说明每一页的用途。截图来自公开的完整工作台演示；只接入基础 SDK 观察时，本机时间线会更精简。
+
 ## 运行显式示例
 
 在另一个终端启动客户本地的控制服务：

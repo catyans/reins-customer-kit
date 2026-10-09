@@ -45,6 +45,10 @@ reins compare --database ./pilot.duckdb --task-type supplier_lookup
 
 Look at the task steps, model calls, retries your application reported, result checks, known costs and amounts still to verify. The basic task record does not store full prompts by default. If you later use the control workflow, its separate database may also hold inputs and outputs; choose a retention policy before using it.
 
+![Example of a full-workspace run analysis with cost by Agent](images/run-analysis.png)
+
+This image is from the [public full-workspace demo](product-tour.en.md), where a multi-Agent task shows its calls, handoffs, and estimated cost by Agent. Your first SDK observation run uses the local timeline described above; it will not automatically have every control-workspace panel. The tour shows what you can inspect after connecting the corresponding workflow features.
+
 ## 4. Decide whether budget control would help
 
 For paid model or tool calls and shared multi-Agent budgets, follow [the integration guide](integration.en.md). Agree on an upper cost limit for each paid operation, checked prices, allowed models and tools, and what to keep if a task stops. Run the control workflow in observation mode first. Turn on enforcement for new tasks only after reviewing real runs and the suggested decisions. Only connected calls can be controlled.

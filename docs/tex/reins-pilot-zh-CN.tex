@@ -1,6 +1,6 @@
 \documentclass[11pt,a4paper]{ctexart}
 \usepackage[margin=21mm,headheight=23pt]{geometry}
-\usepackage{xcolor,booktabs,tabularx,enumitem,fancyhdr,hyperref}
+\usepackage{xcolor,booktabs,tabularx,enumitem,fancyhdr,hyperref,graphicx}
 \definecolor{ink}{HTML}{173B2B}
 \definecolor{accent}{HTML}{5E874A}
 \definecolor{muted}{HTML}{5F7167}
@@ -18,13 +18,18 @@
 \renewcommand{\headrule}{\hbox to\headwidth{\color{line}\leaders\hrule height \headrulewidth\hfill}}
 \newcommand{\sectiontitle}[1]{\vspace{5pt}{\large\bfseries\color{ink}#1}\par\vspace{2pt}}
 \begin{document}
-\vspace*{20mm}
+\vspace*{4mm}
 {\fontsize{31}{38}\selectfont\bfseries\color{ink}让每一次 Agent 任务\\都能算清、看明白。\par}
-\vspace{8mm}
+\vspace{5mm}
 {\large\color{muted}Reins 客户试用手册：从一个已有 Python 工作流开始}\par
-\vspace{9mm}
+\vspace{6mm}
 \colorbox{line}{\parbox{0.91\linewidth}{\vspace{5pt}\textbf{第一步只观察。}看清任务做了什么、花了多少、结果是否符合业务要求。一起审阅证据，再决定是否开启运行时控制。\vspace{5pt}}}\par
-\vspace{10mm}
+\vspace{5mm}
+\begin{center}
+\includegraphics[width=0.72\linewidth]{docs/images/run-analysis.png}\\[2pt]
+{\small\color{muted}公开演示：一条多 Agent 任务记录的费用、调用与交接。}
+\end{center}
+\vspace{0mm}
 \sectiontitle{需要准备}
 \begin{itemize}
 \item Python 3.10+、新的虚拟环境，以及 Reins 私有仓库 \texttt{catyans/reins} 的只读访问权限。
