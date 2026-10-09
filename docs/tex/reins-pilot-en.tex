@@ -1,0 +1,73 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=21mm,headheight=23pt]{geometry}
+\usepackage{xcolor,booktabs,tabularx,enumitem,fancyhdr,hyperref}
+\definecolor{ink}{HTML}{173B2B}
+\definecolor{accent}{HTML}{5E874A}
+\definecolor{muted}{HTML}{5F7167}
+\definecolor{line}{HTML}{DCE6D7}
+\hypersetup{colorlinks=true,linkcolor=ink,urlcolor=accent}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{muted}REINS / CUSTOMER PILOT}
+\fancyhead[R]{\small\color{muted}October 2026}
+\fancyfoot[R]{\small\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{line}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\sectiontitle}[1]{\vspace{5pt}{\large\bfseries\color{ink}#1}\par\vspace{2pt}}
+\begin{document}
+\vspace*{20mm}
+{\fontsize{31}{36}\selectfont\bfseries\color{ink}Make every Agent task\\accountable.\par}
+\vspace{8mm}
+{\large\color{muted}A guided Reins pilot for one existing Python workflow}\par
+\vspace{9mm}
+\colorbox{line}{\parbox{0.91\linewidth}{\vspace{5pt}\textbf{The first step is observation.} See what a task did, what it cost, and whether its result passed your business check. Review the evidence before choosing runtime controls.\vspace{5pt}}}\par
+\vspace{10mm}
+\sectiontitle{What you need}
+\begin{itemize}
+\item Python 3.10+, a new virtual environment, and read-only access to the private \texttt{catyans/reins} repository.
+\item One real multi-step task, its existing tests, and a named engineer who can define an accepted result.
+\item A customer-local storage path; keep provider keys and raw run data in your environment.
+\end{itemize}
+\sectiontitle{Install the pilot version}
+\texttt{git clone git@github.com:catyans/reins.git /path/to/reins}\\
+\texttt{python -m pip install /path/to/reins}
+
+Ask your Reins contact for access to the private product repository. This public kit contains the guides, examples and integration skill.\par
+\vfill
+{\small\color{muted}Full, copyable instructions: \href{https://github.com/catyans/reins-customer-kit}{github.com/catyans/reins-customer-kit}. All sample prices and inputs are constructed.}\par
+\newpage
+
+\sectiontitle{1 / See a whole task, not just its model calls}
+Wrap one complete business task in \texttt{@trace} and configure Reins once before work starts. Observation records what happens without blocking calls. Let your own business check decide whether the result is usable.
+
+\begin{quote}\ttfamily\small
+configure(storage\_path="./pilot.duckdb", mode="observe")\\
+@trace(agent\_name="supplier\_agent", task\_type="supplier\_lookup")\\
+async def research(source):\\
+\hspace*{1em}result = await existing\_agent(source)\\
+\hspace*{1em}record\_outcome(success=required\_fields\_pass(result))\\
+\hspace*{1em}return result
+\end{quote}
+
+Run the original and wrapped task on the same inputs. Compare prompts, outputs and external side effects. Then use \texttt{reins compare --database ./pilot.duckdb --task-type supplier\_lookup}. A process-local timeline is available by setting \texttt{dashboard=True} and opening \texttt{127.0.0.1:8765} while the Agent runs.
+
+\sectiontitle{2 / Connect the calls you want to understand}
+\renewcommand{\arraystretch}{1.28}
+\begin{tabularx}{\linewidth}{@{}p{0.32\linewidth}X@{}}
+\toprule
+Your Agent uses & How to connect it \\
+\midrule
+OpenAI Chat Completions or Anthropic Messages & Calls within the traced task are recorded through the supported SDK path. \\
+Native Gemini or a paid tool & Wrap each paid operation with \texttt{Workflow.call/acall} and report its actual cost. \\
+Framework callbacks / OTel & Add context to the record; controlling spend also needs a connected paid-call path. \\
+HTTP proxy & Can be used for experimental observation. \\
+\bottomrule
+\end{tabularx}
+
+\sectiontitle{3 / Decide when to add budget rules}
+After reviewing real runs, agree on a task budget, a reliable upper limit for each paid call, allowed models and tools, and what to keep if a task stops. Try \texttt{mode="enforce"} on a small set of \emph{new} tasks. Calls already sent may still be billed.
+
+\end{document}

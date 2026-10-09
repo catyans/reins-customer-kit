@@ -1,0 +1,16 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+*.duckdb
+*.sqlite
+*.sqlite-*
+*.token
+.env
+.env.*
+docs/tex/*.aux
+docs/tex/*.fdb_latexmk
+docs/tex/*.fls
+docs/tex/*.log
+docs/tex/*.out
+docs/tex/*.xdv
+tmp/

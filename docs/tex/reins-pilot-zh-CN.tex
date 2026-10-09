@@ -1,0 +1,77 @@
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=21mm,headheight=23pt]{geometry}
+\usepackage{xcolor,booktabs,tabularx,enumitem,fancyhdr,hyperref}
+\definecolor{ink}{HTML}{173B2B}
+\definecolor{accent}{HTML}{5E874A}
+\definecolor{muted}{HTML}{5F7167}
+\definecolor{line}{HTML}{DCE6D7}
+\hypersetup{colorlinks=true,linkcolor=ink,urlcolor=accent}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{muted}REINS / 客户内测}
+\fancyhead[R]{\small\color{muted}2026 年 10 月}
+\fancyfoot[R]{\small\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{line}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\sectiontitle}[1]{\vspace{5pt}{\large\bfseries\color{ink}#1}\par\vspace{2pt}}
+\begin{document}
+\vspace*{20mm}
+{\fontsize{31}{38}\selectfont\bfseries\color{ink}让每一次 Agent 任务\\都能算清、看明白。\par}
+\vspace{8mm}
+{\large\color{muted}Reins 客户试用手册：从一个已有 Python 工作流开始}\par
+\vspace{9mm}
+\colorbox{line}{\parbox{0.91\linewidth}{\vspace{5pt}\textbf{第一步只观察。}看清任务做了什么、花了多少、结果是否符合业务要求。一起审阅证据，再决定是否开启运行时控制。\vspace{5pt}}}\par
+\vspace{10mm}
+\sectiontitle{需要准备}
+\begin{itemize}
+\item Python 3.10+、新的虚拟环境，以及 Reins 私有仓库 \texttt{catyans/reins} 的只读访问权限。
+\item 一个真实的多步骤任务、现有测试，以及能定义合格结果的客户工程师。
+\item 客户本地的数据目录；模型密钥和原始运行数据保留在客户环境。
+\end{itemize}
+\sectiontitle{安装试用版}
+\texttt{git clone git@github.com:catyans/reins.git /path/to/reins}\\
+\texttt{python -m pip install /path/to/reins}
+
+请联系 Reins 团队取得产品私有仓库的访问权限。这份公开资料包提供文档、示例和接入 skill。\par
+\vfill
+{\small\color{muted}可复制命令和完整说明：\href{https://github.com/catyans/reins-customer-kit}{github.com/catyans/reins-customer-kit}。示例输入和价格均为构造数据。}\par
+\newpage
+
+\sectiontitle{1 / 看一次完整任务，不只看模型调用}
+在一个完整业务任务外加 \texttt{@trace}，任务开始前只配置一次 Reins。观察模式只记录，不拦截调用。结果是否可用，由原有业务规则判断。
+
+\begin{quote}\ttfamily\small
+configure(storage\_path="./pilot.duckdb", mode="observe")\\
+@trace(agent\_name="supplier\_agent", task\_type="supplier\_lookup")\\
+async def research(source):\\
+\hspace*{1em}result = await existing\_agent(source)\\
+\hspace*{1em}record\_outcome(success=required\_fields\_pass(result))\\
+\hspace*{1em}return result
+\end{quote}
+
+对同一输入分别运行接入前后版本，检查 prompt、输出和外部副作用。再执行：
+
+\texttt{reins compare --database ./pilot.duckdb --task-type supplier\_lookup}
+
+设置 \texttt{dashboard=True} 后，在 Agent 运行期间打开本机 \texttt{127.0.0.1:8765} 可看时间线。
+
+\sectiontitle{2 / 接入你想看清的调用}
+\renewcommand{\arraystretch}{1.28}
+\begin{tabularx}{\linewidth}{@{}p{0.32\linewidth}X@{}}
+\toprule
+现有调用 & 接入方式 \\
+\midrule
+OpenAI Chat Completions 或 Anthropic Messages & 任务内的调用可通过受支持的 SDK 路径记录。 \\
+原生 Gemini 或付费工具 & 用 \texttt{Workflow.call/acall} 包住每次付费操作，记录真实费用。 \\
+框架回调／OTel & 可以补充过程信息；控制支出还需接入实际付费调用。 \\
+HTTP Proxy & 可用于实验性的观察。 \\
+\bottomrule
+\end{tabularx}
+
+\sectiontitle{3 / 再决定要不要加预算规则}
+看过真实运行记录后，约定任务预算、每次付费调用的可靠上限、可用模型和工具，以及任务停止时保留什么。先在一小组\textbf{新任务}上试 \texttt{mode="enforce"}。已经发出的调用仍可能计费。
+
+\end{document}
