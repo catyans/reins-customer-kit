@@ -41,7 +41,7 @@ case "$assistant" in
   *) echo 'Choose --assistant codex, claude, or both.' >&2; exit 2 ;;
 esac
 
-source_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../用户安装包/skill/reins-integrate" && pwd)"
+source_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../customer-install-pack/skill/reins-integrate" && pwd)"
 target="$(cd "$target" && pwd -P)"
 destinations=()
 if [[ "$assistant" == codex || "$assistant" == both ]]; then

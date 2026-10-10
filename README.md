@@ -2,7 +2,7 @@
 
 [简体中文](README.zh-CN.md) · [English handbook](docs/pdf/reins-pilot-en.pdf) · [中文手册](docs/pdf/reins-pilot-zh-CN.pdf)
 
-**Customer install pack:** [integration skill and private repository access](用户安装包/).
+**Customer install pack:** [integration skill and private repository access](customer-install-pack/).
 
 When an Agent keeps working, it can be hard to tell which calls were useful, what the whole task cost, or whether the result was good enough. Reins puts those answers around the **task**, so your team can inspect the run and decide where spending should continue or stop.
 
@@ -44,7 +44,7 @@ The example uses a made-up task and fee. For a useful trial, follow the [quickst
 | [Visual product tour](docs/product-tour.en.md) | See every page of the current web workspace and what you can do there. |
 | [Integration guide](docs/integration.en.md) | Choose the right connection for your model provider and Agent framework. |
 | [Examples](examples/) | Copy a small working pattern or compare code before and after integration. |
-| [Integration skill](用户安装包/skill/reins-integrate/SKILL.md) | Have Codex or Claude Code prepare a small patch for your repository. |
+| [Integration skill](customer-install-pack/skill/reins-integrate/SKILL.md) | Have Codex or Claude Code prepare a small patch for your repository. |
 
 Every guide also has a Chinese version. The short PDF handbooks are ready to share with a teammate who prefers to read offline.
 

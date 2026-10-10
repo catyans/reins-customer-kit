@@ -2,7 +2,7 @@
 
 [English](README.md) · [中文手册](docs/pdf/reins-pilot-zh-CN.pdf) · [English handbook](docs/pdf/reins-pilot-en.pdf)
 
-**用户安装包：**[接入 Skill 与私有仓库入口](用户安装包/)。
+**用户安装包：**[接入 Skill 与私有仓库入口](customer-install-pack/)。
 
 Agent 跑起来以后，团队往往很难回答几个简单的问题：钱花在了哪一步？它为什么一直调用模型？最后的结果到底能不能用？Reins 把这些信息放回**一次完整任务**里，让团队看清执行过程，再决定哪些支出值得继续。
 
@@ -44,7 +44,7 @@ reins compare --database /tmp/reins-pilot.duckdb --task-type supplier_lookup
 | [图解产品页面](docs/product-tour.zh-CN.md) | 看当前网页工作台每个页面有什么、能做什么。 |
 | [接入指南](docs/integration.zh-CN.md) | 根据模型和 Agent 框架选择接入方式。 |
 | [示例代码](examples/) | 参考可运行的写法，或对照接入前后的代码。 |
-| [接入 skill](用户安装包/skill/reins-integrate/SKILL.md) | 让 Codex 或 Claude Code 为你的代码库准备接入改动。 |
+| [接入 skill](customer-install-pack/skill/reins-integrate/SKILL.md) | 让 Codex 或 Claude Code 为你的代码库准备接入改动。 |
 
 每份指南都有英文版。简短的 PDF 手册适合转给希望离线阅读的同事。
 

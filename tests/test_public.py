@@ -71,7 +71,7 @@ def test_install_skill_both_idempotent_and_uninstall(tmp_path):
         assert path.exists()
         assert (
             path.read_bytes()
-            == (ROOT / "用户安装包/skill/reins-integrate/SKILL.md").read_bytes()
+            == (ROOT / "customer-install-pack/skill/reins-integrate/SKILL.md").read_bytes()
         )
     again = run_installer(*args)
     assert again.returncode == 0 and "Already installed" in again.stdout
@@ -111,7 +111,7 @@ def test_installer_refuses_symlinked_skill_paths_without_touching_external_files
 
 
 def test_skill_frontmatter_and_docs_links():
-    package = ROOT / "用户安装包/skill/reins-integrate"
+    package = ROOT / "customer-install-pack/skill/reins-integrate"
     legacy = ROOT / "skills/reins-integrate"
     assert sorted(path.relative_to(package) for path in package.rglob("*")) == sorted(
         path.relative_to(legacy) for path in legacy.rglob("*")
@@ -137,7 +137,7 @@ def test_local_markdown_links_resolve():
     files = [
         ROOT / "README.md",
         ROOT / "README.zh-CN.md",
-        ROOT / "用户安装包/Reins私有仓库.md",
+        ROOT / "customer-install-pack/private-repository.md",
         *ROOT.glob("docs/*.md"),
     ]
     for document in files:
