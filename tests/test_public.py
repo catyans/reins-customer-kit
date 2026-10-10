@@ -69,6 +69,10 @@ def test_install_skill_both_idempotent_and_uninstall(tmp_path):
         tmp_path / ".claude/skills/reins-integrate/SKILL.md",
     ):
         assert path.exists()
+        assert (
+            path.read_bytes()
+            == (ROOT / "用户安装包/skill/reins-integrate/SKILL.md").read_bytes()
+        )
     again = run_installer(*args)
     assert again.returncode == 0 and "Already installed" in again.stdout
     changed = tmp_path / ".agents/skills/reins-integrate/SKILL.md"
@@ -107,7 +111,17 @@ def test_installer_refuses_symlinked_skill_paths_without_touching_external_files
 
 
 def test_skill_frontmatter_and_docs_links():
-    skill = (ROOT / "skills/reins-integrate/SKILL.md").read_text()
+    package = ROOT / "用户安装包/skill/reins-integrate"
+    legacy = ROOT / "skills/reins-integrate"
+    assert sorted(path.relative_to(package) for path in package.rglob("*")) == sorted(
+        path.relative_to(legacy) for path in legacy.rglob("*")
+    )
+    for path in package.rglob("*"):
+        if path.is_file():
+            assert (
+                path.read_bytes() == (legacy / path.relative_to(package)).read_bytes()
+            )
+    skill = (package / "SKILL.md").read_text()
     assert skill.startswith("---\n")
     frontmatter = yaml.safe_load(skill.split("---", 2)[1])
     assert frontmatter["name"] == "reins-integrate"
@@ -120,7 +134,12 @@ def test_skill_frontmatter_and_docs_links():
 
 
 def test_local_markdown_links_resolve():
-    files = [ROOT / "README.md", ROOT / "README.zh-CN.md", *ROOT.glob("docs/*.md")]
+    files = [
+        ROOT / "README.md",
+        ROOT / "README.zh-CN.md",
+        ROOT / "用户安装包/Reins私有仓库.md",
+        *ROOT.glob("docs/*.md"),
+    ]
     for document in files:
         for target in re.findall(r"\]\(([^)]+)\)", document.read_text()):
             if target.startswith(("https://", "http://", "#")):
