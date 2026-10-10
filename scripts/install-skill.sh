@@ -42,7 +42,7 @@ case "$assistant" in
 esac
 
 source_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../skills/reins-integrate" && pwd)"
-target="$(cd "$target" && pwd)"
+target="$(cd "$target" && pwd -P)"
 destinations=()
 if [[ "$assistant" == codex || "$assistant" == both ]]; then
   destinations+=("$target/.agents/skills/reins-integrate")
@@ -52,6 +52,18 @@ if [[ "$assistant" == claude || "$assistant" == both ]]; then
 fi
 
 for destination in "${destinations[@]}"; do
+  # A linked skills directory could send an install or uninstall outside the
+  # requested repository, even when the destination itself looks local.
+  relative="${destination#"$target"/}"
+  IFS='/' read -r -a components <<< "$relative"
+  current="$target"
+  for component in "${components[@]}"; do
+    current="$current/$component"
+    if [[ -L "$current" ]]; then
+      echo "Refusing a symlinked skill path: $current" >&2
+      exit 3
+    fi
+  done
   if [[ -e "$destination" && "$force" -eq 0 ]] && ! diff -qr "$source_dir" "$destination" >/dev/null; then
     echo "Refusing to replace a modified skill: $destination (use --force)" >&2
     exit 3

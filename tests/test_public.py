@@ -38,7 +38,9 @@ def test_before_after_preserve_prompt_and_business_output():
 
     workflow = Workflow()
     plain = asyncio.run(before("ticket", "policy", provider))
-    wrapped = asyncio.run(after("ticket", "policy", provider, workflow, max_cost="0.01"))
+    wrapped = asyncio.run(
+        after("ticket", "policy", provider, workflow, max_cost="0.01")
+    )
     assert plain == wrapped
     assert prompts[0] == prompts[1]
     assert workflow.calls[1][0]["max_cost"] == "0.01"
@@ -79,6 +81,29 @@ def test_install_skill_both_idempotent_and_uninstall(tmp_path):
     removed = run_installer(*args, "--uninstall")
     assert removed.returncode == 0
     assert not changed.exists()
+
+
+def test_installer_refuses_symlinked_skill_paths_without_touching_external_files(
+    tmp_path,
+):
+    customer = tmp_path / "customer"
+    external = tmp_path / "external"
+    customer.mkdir()
+    external.mkdir()
+    existing = external / "reins-integrate"
+    existing.mkdir()
+    marker = existing / "customer-notes.txt"
+    marker.write_text("preserve me")
+    (customer / ".agents").mkdir()
+    (customer / ".agents/skills").symlink_to(external, target_is_directory=True)
+
+    args = ("--target", str(customer), "--assistant", "both")
+    for action in ((), ("--dry-run",), ("--force",), ("--uninstall", "--force")):
+        result = run_installer(*args, *action)
+        assert result.returncode == 3
+        assert "symlinked skill path" in result.stderr
+        assert marker.read_text() == "preserve me"
+        assert not (customer / ".claude").exists()
 
 
 def test_skill_frontmatter_and_docs_links():
